@@ -38,7 +38,7 @@ func (c *CLI) Run(args []string) int {
 	}
 
 	done := make(chan struct{})
-	t := time.NewTimer(time.Duration(timeLimit * int(time.Second)))
+	timer := time.NewTimer(time.Duration(timeLimit * int(time.Second)))
 
 	go func(f *os.File) {
 		// check input is correct
@@ -58,7 +58,7 @@ func (c *CLI) Run(args []string) int {
 	}(f)
 
 	select {
-	case <-t.C:
+	case <-timer.C:
 		printResult := func() {
 			fmt.Println("finish")
 			fmt.Printf("limit time is over(%d seconds)\n", timeLimit)
